@@ -24,11 +24,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Purchaser implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Purchaser extends BaseEntity {
 
     @Basic(optional = false)
     private String name;
@@ -42,8 +38,8 @@ public class Purchaser implements Serializable {
     /**
      * The per-creditor settings for financing.
      */
-    @Singular
+    /*@Singular
     @OneToMany(cascade = CascadeType.PERSIST)
-    private Set<PurchaserFinancingSettings> purchaserFinancingSettings = new HashSet<>();
+    private Set<PurchaserFinancingSettings> purchaserFinancingSettings = new HashSet<>();*/
 
 }

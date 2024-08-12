@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import static jakarta.persistence.ConstraintMode.NO_CONSTRAINT;
+
 /**
  * An invoice issued by the {@link Creditor} to the {@link Debtor} for shipped goods.
  */
@@ -21,11 +23,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Invoice implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Invoice extends BaseEntity{
 
     /**
      * Creditor is the entity that issued the invoice.
@@ -51,4 +49,25 @@ public class Invoice implements Serializable {
      */
     @Basic(optional = false)
     private long valueInCents;
+
+    // BEGIN MY UPDATES
+
+    @Basic(optional = false)
+    private boolean financed;
+
+    @ManyToOne
+    private Purchaser purchaser;
+
+    @Basic
+    private long financingTermInDays;
+
+    @Basic
+    private long financingRate;
+
+    //todo to BigDecimal
+    @Basic
+    private long earlyPaymentAmount;
+
+    @Basic
+    private LocalDate financingDate;
 }

@@ -20,14 +20,15 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaserFinancingSettings implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@NamedEntityGraph(name = "FinancingSettings.Purchaser", attributeNodes =
+        {@NamedAttributeNode("purchaser"), @NamedAttributeNode("creditor")})
+public class PurchaserFinancingSettings extends BaseEntity {
 
     @ManyToOne(optional = false)
     private Creditor creditor;
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Purchaser purchaser;
 
     /**
      * The annual financing rate set by the purchaser for this creditor.
