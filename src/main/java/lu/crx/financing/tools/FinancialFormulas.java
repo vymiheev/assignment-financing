@@ -1,10 +1,11 @@
-package lu.crx.financing;
+package lu.crx.financing.tools;
 
 public class FinancialFormulas {
 
     public static final float DAYS_AMOUNT_IN_YEAR = 360f;
 
     public static long calcFinancialRate(int annualRate, long invoiceTerm) {
+        //todo make a proper algorithm of round double numbers
         return Math.round(annualRate * invoiceTerm / DAYS_AMOUNT_IN_YEAR);
     }
 

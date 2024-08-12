@@ -1,7 +1,7 @@
 package lu.crx.financing.services.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import lu.crx.financing.FinancialFormulas;
+import lu.crx.financing.tools.FinancialFormulas;
 import lu.crx.financing.entities.Invoice;
 import lu.crx.financing.entities.Purchaser;
 import lu.crx.financing.repository.InvoiceRepository;
@@ -33,16 +33,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         final LocalDate localDate = LocalDate.now();
 
         long daysBetween = ChronoUnit.DAYS.between(localDate, invoice.getMaturityDate());
-        Optional<Map.Entry<Long, Purchaser>> rateAndPurchaser = purchaserService.choosePurchaser(invoice.getCreditor(), daysBetween);
+        Optional<Map.Entry<Integer, Purchaser>> rateAndPurchaser = purchaserService.choosePurchaser(invoice.getCreditor(), daysBetween);
         if (rateAndPurchaser.isEmpty()) {
             log.info("Not Found Purchaser for {}", invoice.getId());
             return;
         }
-        long financingRate = rateAndPurchaser.get().getKey();
         invoice.setPurchaser(rateAndPurchaser.get().getValue());
         invoice.setFinancingDate(localDate);
         invoice.setFinancingTermInDays(daysBetween);
 
+        long financingRate = FinancialFormulas.calcFinancialRate(rateAndPurchaser.get().getKey(), daysBetween);
         invoice.setFinancingRate(financingRate);
         invoice.setEarlyPaymentAmount(FinancialFormulas.getEarlyPaymentAmount(invoice.getValueInCents(), financingRate));
         invoice.setFinanced(true);

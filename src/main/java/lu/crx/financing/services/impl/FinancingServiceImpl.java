@@ -27,7 +27,6 @@ public class FinancingServiceImpl implements FinancingService {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
-
     @Autowired
     private InvoiceService invoiceService;
     @Autowired
@@ -43,7 +42,7 @@ public class FinancingServiceImpl implements FinancingService {
 
     @Transactional(readOnly = true)
     public void finance() {
-        log.info("Financing started");
+            log.info("Financing started");
         AtomicLong invoicesProcessed = new AtomicLong();
         Pageable pageable = PageRequest.of(0, crxConfig.getInvoicePageSize());
         Page<Invoice> invoices;

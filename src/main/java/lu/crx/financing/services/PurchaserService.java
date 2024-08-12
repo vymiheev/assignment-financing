@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface PurchaserService {
 
-    Optional<Map.Entry<Long, Purchaser>> choosePurchaser(@NotNull Creditor creditor, long financingTerm);
+    Optional<Map.Entry<Integer, Purchaser>> choosePurchaser(@NotNull Creditor creditor, long financingTerm);
 }
