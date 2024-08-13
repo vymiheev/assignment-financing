@@ -1,12 +1,10 @@
 package lu.crx.financing.services.impl;
 
-import jakarta.persistence.EntityManager;
-import lu.crx.financing.entities.*;
-import lu.crx.financing.repository.InvoiceRepository;
+import lu.crx.financing.entities.Invoice;
 import lu.crx.financing.services.FinancingService;
 import lu.crx.financing.services.InvoiceService;
-import lu.crx.financing.services.PurchaserService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,15 +12,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -31,8 +26,7 @@ import static org.mockito.Mockito.times;
 @AutoConfigureMockMvc
 @SpringBootTest
 @Transactional
-@jakarta.transaction.Transactional
-class FinancingServiceImplTest {
+class FinancingServiceImplTest extends AbstractDataPreparerTest{
     @Autowired
     private FinancingService financingService;
     @SpyBean
@@ -54,6 +48,18 @@ class FinancingServiceImplTest {
 
     @Test
     void finance_exception() {
+
+    }
+
+    @Test
+    @Timeout(value = 30, unit = TimeUnit.SECONDS)
+    void highLoad() {
+        var invoice = prepareInvoiceData();
+        preparePurchaserData(invoice.getCreditor());
+        for (int i = 0; i < 10_000; i++) {
+            prepareInvoiceData();
+            invoiceService.processInvoice(invoice);
+        }
 
     }
 }

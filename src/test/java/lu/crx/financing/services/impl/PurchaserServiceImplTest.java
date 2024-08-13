@@ -14,8 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 
 @SpringBootTest
@@ -23,7 +21,7 @@ class PurchaserServiceImplTest {
     @Autowired
     private PurchaserService purchaserService;
     @MockBean
-    private PurchaserFinancingSettingsRepository purchaserFinancingSettingsRepository;
+    private PurchaserFinancingSettingsRepository settingsRepository;
     @MockBean
     private CommandLineRunner commandLineRunner;
 
@@ -38,7 +36,7 @@ class PurchaserServiceImplTest {
                 .build());
         var financingTerm = 30;
         doReturn(list)
-                .when(purchaserFinancingSettingsRepository)
+                .when(settingsRepository)
                 .findByCreditor(creditor);
         var result = purchaserService.choosePurchaser(creditor, financingTerm);
         Assertions.assertTrue(result.isPresent());
@@ -62,7 +60,7 @@ class PurchaserServiceImplTest {
                 .build());
         var financingTerm = 30;
         doReturn(list)
-                .when(purchaserFinancingSettingsRepository)
+                .when(settingsRepository)
                 .findByCreditor(creditor);
         var result = purchaserService.choosePurchaser(creditor, financingTerm);
         Assertions.assertTrue(result.isPresent());
@@ -86,7 +84,7 @@ class PurchaserServiceImplTest {
                 .build());
         var financingTerm = 36;
         doReturn(list)
-                .when(purchaserFinancingSettingsRepository)
+                .when(settingsRepository)
                 .findByCreditor(creditor);
         //30*36/360
         var result = purchaserService.choosePurchaser(creditor, financingTerm);
@@ -111,7 +109,7 @@ class PurchaserServiceImplTest {
                 .build());
         var financingTerm = 36;
         doReturn(list)
-                .when(purchaserFinancingSettingsRepository)
+                .when(settingsRepository)
                 .findByCreditor(creditor);
         //13*36/360
         var result = purchaserService.choosePurchaser(creditor, financingTerm);
@@ -131,7 +129,7 @@ class PurchaserServiceImplTest {
                 .build());
         var financingTerm = 36;
         doReturn(list)
-                .when(purchaserFinancingSettingsRepository)
+                .when(settingsRepository)
                 .findByCreditor(creditor);
         //13*36/360
         var result = purchaserService.choosePurchaser(creditor, financingTerm);

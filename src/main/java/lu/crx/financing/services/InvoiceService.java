@@ -10,5 +10,7 @@ public interface InvoiceService {
 
     void processInvoice(@NotNull Invoice invoice);
 
+    void processInvoiceSameTransaction(@NotNull Invoice invoice);
+
     Page<Invoice> findAllByFinancedFalse(Pageable pageable);
 }

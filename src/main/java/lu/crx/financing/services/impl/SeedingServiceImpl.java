@@ -1,19 +1,15 @@
 package lu.crx.financing.services.impl;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import lu.crx.financing.entities.Creditor;
-import lu.crx.financing.entities.Debtor;
-import lu.crx.financing.entities.Invoice;
-import lu.crx.financing.entities.Purchaser;
-import lu.crx.financing.entities.PurchaserFinancingSettings;
+import lu.crx.financing.entities.*;
 import lu.crx.financing.services.SeedingService;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service

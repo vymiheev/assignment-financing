@@ -5,7 +5,6 @@ import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import lu.crx.financing.config.CrxConfig;
 import lu.crx.financing.entities.Invoice;
-import lu.crx.financing.repository.InvoiceRepository;
 import lu.crx.financing.services.FinancingService;
 import lu.crx.financing.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;

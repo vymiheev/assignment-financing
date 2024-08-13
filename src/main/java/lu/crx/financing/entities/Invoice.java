@@ -1,17 +1,12 @@
 package lu.crx.financing.entities;
 
-import java.io.Serializable;
+import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
+
 import java.time.LocalDate;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-import static jakarta.persistence.ConstraintMode.NO_CONSTRAINT;
 
 /**
  * An invoice issued by the {@link Creditor} to the {@link Debtor} for shipped goods.
@@ -28,13 +23,13 @@ public class Invoice extends BaseEntity {
     /**
      * Creditor is the entity that issued the invoice.
      */
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     private Creditor creditor;
 
     /**
      * Debtor is the entity obliged to pay according to the invoice.
      */
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     private Debtor debtor;
 
     /**
