@@ -26,8 +26,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FinancingServiceImpl implements FinancingService {
 
     @Autowired
-    private InvoiceRepository invoiceRepository;
-    @Autowired
     private InvoiceService invoiceService;
     @Autowired
     private CrxConfig crxConfig;
@@ -42,19 +40,23 @@ public class FinancingServiceImpl implements FinancingService {
 
     @Transactional(readOnly = true)
     public void finance() {
-            log.info("Financing started");
+        log.info("Financing started");
         AtomicLong invoicesProcessed = new AtomicLong();
         Pageable pageable = PageRequest.of(0, crxConfig.getInvoicePageSize());
         Page<Invoice> invoices;
         do {
-            invoices = invoiceRepository.findAllByFinancedFalse(pageable);
+            invoices = invoiceService.findAllByFinancedFalse(pageable);
 
             for (Invoice invoice : invoices.getContent()) {
                 Page<Invoice> finalInvoices = invoices;
                 executorService.submit(() -> {
-                    invoicesProcessed.incrementAndGet();
-                    log.info("Invoices processed {} of {}", invoicesProcessed, finalInvoices.getTotalElements());
-                    invoiceService.processInvoice(invoice);
+                    try {
+                        invoiceService.processInvoice(invoice);
+                        invoicesProcessed.incrementAndGet();
+                        log.info("Invoices processed {} of {}", invoicesProcessed, finalInvoices.getTotalElements());
+                    } catch (Exception ex) {
+                        log.error("Invoice processing exception {}", invoice, ex);
+                    }
                 });
             }
             pageable = invoices.nextPageable();

@@ -1,17 +1,8 @@
 package lu.crx.financing.entities;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Singular;
-import lombok.ToString;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import lombok.*;
 
 /**
  * Purchaser is an entity (usually a bank) that wants to purchase the invoices. I.e. it issues a loan
@@ -34,12 +25,5 @@ public class Purchaser extends BaseEntity {
      */
     @Basic(optional = false)
     private int minimumFinancingTermInDays;
-
-    /**
-     * The per-creditor settings for financing.
-     */
-    /*@Singular
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private Set<PurchaserFinancingSettings> purchaserFinancingSettings = new HashSet<>();*/
 
 }

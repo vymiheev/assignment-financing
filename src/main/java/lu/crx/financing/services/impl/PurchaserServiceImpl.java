@@ -22,7 +22,12 @@ public class PurchaserServiceImpl implements PurchaserService {
     @Autowired
     private PurchaserFinancingSettingsRepository financingSettingRepository;
 
-    //todo doc
+    /**
+     *  select 1 purchaser
+     * @param creditor input creditor from invoice
+     * @param financingTerm calculcated days of invoice
+     * @return Map.Entry<Integer, Purchaser> where key is a AnnualRateInBps, value - Purchaser
+     */
     @Transactional(readOnly = true)
     public Optional<Map.Entry<Integer, Purchaser>> choosePurchaser(@NotNull Creditor creditor, long financingTerm) {
         final List<PurchaserFinancingSettings> purchasers = financingSettingRepository.findByCreditor(creditor);

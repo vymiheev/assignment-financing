@@ -23,18 +23,18 @@ import static jakarta.persistence.ConstraintMode.NO_CONSTRAINT;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Invoice extends BaseEntity{
+public class Invoice extends BaseEntity {
 
     /**
      * Creditor is the entity that issued the invoice.
      */
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Creditor creditor;
 
     /**
      * Debtor is the entity obliged to pay according to the invoice.
      */
-    @ManyToOne
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Debtor debtor;
 
     /**
@@ -55,7 +55,7 @@ public class Invoice extends BaseEntity{
     @Basic(optional = false)
     private boolean financed;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Purchaser purchaser;
 
     @Basic

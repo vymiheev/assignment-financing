@@ -1,9 +1,6 @@
 package lu.crx.financing.services.impl;
 
-import lu.crx.financing.entities.Creditor;
-import lu.crx.financing.entities.Debtor;
-import lu.crx.financing.entities.Invoice;
-import lu.crx.financing.entities.Purchaser;
+import lu.crx.financing.entities.*;
 import lu.crx.financing.services.InvoiceService;
 import lu.crx.financing.services.PurchaserService;
 import lu.crx.financing.tools.FinancialFormulas;

@@ -1,14 +1,8 @@
 package lu.crx.financing.entities;
 
-import java.io.Serializable;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import lombok.*;
 
 /**
  * A creditor is a company that shipped some goods to the {@link Debtor}, issued an {@link Invoice} for the shipment

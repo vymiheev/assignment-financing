@@ -1,14 +1,8 @@
 package lu.crx.financing.entities;
 
-import java.io.Serializable;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import lombok.*;
 
 /**
  * A debtor is an entity that purchased some goods from the {@link Creditor}, received an {@link Invoice}
