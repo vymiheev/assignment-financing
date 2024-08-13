@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @Transactional
-class InvoiceServiceImplTest extends AbstractDataPreparerTest{
+class InvoiceServiceImplTest extends AbstractDataPreparerTest {
 
     @Autowired
     private InvoiceService invoiceService;
@@ -27,7 +27,9 @@ class InvoiceServiceImplTest extends AbstractDataPreparerTest{
 
     @Test
     void processInvoice_smoke() {
-        var invoice = prepareInvoiceData();
+        var debtor = prepareDebtorData();
+        var creditor = prepareCreditorData();
+        var invoice = prepareInvoiceData(creditor, debtor);
         var purchaser = preparePurchaserData(invoice.getCreditor());
 
         invoiceService.processInvoiceSameTransaction(invoice);
@@ -48,7 +50,9 @@ class InvoiceServiceImplTest extends AbstractDataPreparerTest{
 
     @Test
     void processInvoice_noPurchaser() {
-        var invoice = prepareInvoiceData();
+        var debtor = prepareDebtorData();
+        var creditor = prepareCreditorData();
+        var invoice = prepareInvoiceData(creditor, debtor);
 
         invoiceService.processInvoice(invoice);
 

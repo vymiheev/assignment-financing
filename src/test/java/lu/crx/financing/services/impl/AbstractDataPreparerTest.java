@@ -5,6 +5,7 @@ import lu.crx.financing.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 public abstract class AbstractDataPreparerTest {
     @Autowired
@@ -21,25 +22,33 @@ public abstract class AbstractDataPreparerTest {
         return purchaser;
     }
 
-    public Invoice prepareInvoiceData() {
+    public Invoice prepareInvoiceData(Creditor creditor, Debtor debtor) {
         var localDateInvoice = LocalDate.now().plusDays(36);
-        var creditor1 = Creditor.builder()
-                .name("Coffee Beans LLC")
-                .maxFinancingRateInBps(5)
-                .build();
-        var debtor1 = Debtor.builder()
-                .name("ChocoLoco")
-                .build();
-        entityManager.persist(creditor1);
-        entityManager.persist(debtor1);
         var invoice = Invoice.builder()
-                .creditor(creditor1)
-                .debtor(debtor1)
+                .creditor(creditor)
+                .debtor(debtor)
                 .valueInCents(100000)
                 .maturityDate(localDateInvoice)
                 .build();
         invoice = entityManager.merge(invoice);
 
         return invoice;
+    }
+
+    public Debtor prepareDebtorData() {
+        var debtor = Debtor.builder()
+                .name("ChocoLoco")
+                .build();
+        entityManager.persist(debtor);
+        return debtor;
+    }
+
+    public Creditor prepareCreditorData() {
+        var creditor = Creditor.builder()
+                .name(String.valueOf(new Random().nextInt()))
+                .maxFinancingRateInBps(5)
+                .build();
+        entityManager.persist(creditor);
+        return creditor;
     }
 }
